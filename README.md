@@ -616,5 +616,112 @@ class MyFirstNotification extends Notification
     }
 }
 ```
+## -=-Laravel 8 Notification system Tutorial-02-=-
+
+#### Step 1: Create Controller
+- Here, We require to ChangeCommnetController that will manage method of route. So let's put bellow code.
+`app/Http/Controllers/CommnetController.php`
+```
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Comment;
+use App\Notifications\MyFirstNotification;
+class CommentController extends Controller
+{
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    public function store(Request $request)
+    {
+        $request->validate([
+            'body'=>'required',
+        ]);
+        $input = $request->all();
+        $input['user_id'] = auth()->user()->id;  
+        $comment = Comment::create($input);
+        $comment->user->notify(new MyFirstNotification($comment));  
+        return back();
+    }
+}
+```
+
+#### Step 2: you can customize the following:
+customize the "Notifications" in app folder. `app/Notifications/MyFirstNotification.php` like below:
+```
+<?php
+
+namespace App\Notifications;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
+
+class MyFirstNotification extends Notification
+{
+    use Queueable;
+    private $details;    
+
+    /**
+     * Create a new notification instance.
+     *
+     * @return void
+     */
+    public function __construct($details)
+    {
+        $this->details = $details;
+    }
+
+    /**
+     * Get the notification's delivery channels.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
+    public function via($notifiable)
+    {
+        return ['database'];
+    } 
+
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
+    public function toDatabase($notifiable)
+    {
+        return [
+           'user'=>auth()->user()
+        ];
+    }
+
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
+    public function toArray($notifiable)
+    {
+        return [
+            //
+        ];
+    }
+}
+```
+
+#### Step 3: Test in Comment on Browser :
+- Add comment on Post on Browser and check in notifications table in phpmyadmin table
+that's it.
 
 

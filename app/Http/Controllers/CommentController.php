@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use App\Notifications\MyFirstNotification;
 class CommentController extends Controller
 {
     /**
@@ -22,7 +23,8 @@ class CommentController extends Controller
         ]);
         $input = $request->all();
         $input['user_id'] = auth()->user()->id;  
-        Comment::create($input);  
+        $comment = Comment::create($input);
+        $comment->user->notify(new MyFirstNotification($comment));  
         return back();
     }
 }
