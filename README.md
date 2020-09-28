@@ -59,3 +59,39 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+## -- Laravel Default Authentication --
+
+#### Step 1: Create Auth Scaffolding 
+- You have to follow few steps to make auth in your laravel 8 application.
+First, you need to install the laravel/UI package as like bellow:
+
+```
+composer require laravel/ui
+php artisan ui bootstrap --auth
+npm install && npm run dev
+```
+
+#### Step 3: Create Database at phpMyAdmin named `laravel-8-realtime-notification-with-pusher-and-laravel-echo` and setup .env file in your root directory 
+
+- Database
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel-8-realtime-notification-with-pusher-and-laravel-echo
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+#### Step 4: Migrate Database
+- Now you need to run default migration of laravel by the following command:
+```
+php artisan migrate
+```
+
+#### Step 5: Run Server
+```
+php artisan serve
+```
