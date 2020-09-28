@@ -10,10 +10,14 @@ class Post extends Model
     use HasFactory;
     
     protected $table = 'posts';
-    protected $fillable = ['title', 'body'];  
+    protected $fillable = ['title', 'body', 'userId'];  
 
     public function comments()
     {
         return $this->hasMany('App\Models\Comment')->whereNull('parent_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User','userId', 'id');
     }
 }

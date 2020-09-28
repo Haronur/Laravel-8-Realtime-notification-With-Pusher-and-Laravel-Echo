@@ -6,6 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 class PostController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
     public function index()
     {
         $posts = Post::all();  
@@ -24,7 +33,9 @@ class PostController extends Controller
             'body'=>'required',
         ]);   
 
-        Post::create($request->all());
+        $input = $request->all();
+        $input['userId'] = auth()->user()->id;  
+        Post::create($input);   
         return redirect()->route('posts.index');
     }
 

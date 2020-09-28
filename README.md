@@ -294,7 +294,15 @@ use App\Comment;
 
 class CommentController extends Controller
 {
-
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    } 
     public function store(Request $request)
     {
     	$request->validate([
@@ -486,3 +494,7 @@ Route::post('/comment/store', [App\Http\Controllers\CommentController::class, 's
 `php artisan serve`
 - Now you can open bellow URL on your browser:
 `http://localhost:8000/posts`
+
+## --Nested Comment System in Laravel from Scratch (Auth integrate to create  New POST)--
+
+
