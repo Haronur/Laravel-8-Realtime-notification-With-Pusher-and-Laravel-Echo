@@ -498,3 +498,123 @@ Route::post('/comment/store', [App\Http\Controllers\CommentController::class, 's
 ## --Nested Comment System in Laravel from Scratch (Auth integrate to create  New POST)--
 
 
+## -=-Laravel 8 Notification system Tutorial-01-=-
+
+#### Step 1: Create Database Table
+
+- In this step, we need to create "notifications" table by using laravel 8 artisan command, so let's run bellow command:
+```
+php artisan notifications:table
+php artisan migrate
+```
+- Now you can see new file will create as "migration table" in migration folder. `migration/notifications` like below
+```
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateNotificationsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('notifications', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('type');
+            $table->morphs('notifiable');
+            $table->text('data');
+            $table->timestamp('read_at')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('notifications');
+    }
+}
+```
+
+#### Step 2: Create Notification
+
+In this step, we need to create "Notification" by using laravel 8 artisan command, so let's run bellow command, we will create MyFirstNotification.
+
+`php artisan make:notification MyFirstNotification`
+
+now you can see new folder will create as "Notifications" in app folder. `app/Notifications/MyFirstNotification.php` like below:
+```
+<?php
+
+namespace App\Notifications;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
+
+class MyFirstNotification extends Notification
+{
+    use Queueable;
+
+    /**
+     * Create a new notification instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Get the notification's delivery channels.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
+    public function via($notifiable)
+    {
+        return ['mail'];
+    }
+
+    /**
+     * Get the mail representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return \Illuminate\Notifications\Messages\MailMessage
+     */
+    public function toMail($notifiable)
+    {
+        return (new MailMessage)
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
+    }
+
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
+    public function toArray($notifiable)
+    {
+        return [
+            //
+        ];
+    }
+}
+```
+
+
