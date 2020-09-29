@@ -49,7 +49,7 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown" onclick="markNotificationAsRead('{{ count(Auth::user()->unreadNotifications) }}')">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     <span class="glyphicon glyphicon-globe"></span>Notifications<span class="badge">{{ count(Auth::user()->unreadNotifications) }}</span>
                                     
@@ -57,8 +57,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     @foreach(Auth::user()->unreadNotifications as $notification)
-                                    <a class="dropdown-item" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                    <a href="{{route('post.show',$notification->data['CommentDetails']['post_id'])}}" class="dropdown-item" >
                             {{$notification->data['user']['email']}} commented on <strong> {{$notification->data['CommentDetails']['body']}}</strong>
                                     </a>
                                     @endforeach
@@ -91,5 +90,12 @@
             @yield('content')
         </main>
     </div>
+    <script type="text/javascript">
+        function markNotificationAsRead(notificationCount) {
+            if(notificationCount !=='0'){
+                $.get('/markAsRead');
+            }
+        }
+    </script>
 </body>
 </html>

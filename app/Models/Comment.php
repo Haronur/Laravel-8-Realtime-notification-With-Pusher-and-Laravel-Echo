@@ -26,4 +26,9 @@ class Comment extends Model
     {
         return $this->hasMany('App\Models\Comment', 'parent_id');
     } 
+    
+    public function replie()
+    {
+        return $this->belongsTo('App\Models\Comment', 'parent_id');
+    } 
 }

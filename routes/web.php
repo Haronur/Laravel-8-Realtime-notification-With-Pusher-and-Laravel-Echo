@@ -26,3 +26,6 @@ Route::post('post', [App\Http\Controllers\PostController::class, 'store'])->name
 Route::get('/post-show/{id}', [App\Http\Controllers\PostController::class, 'show'])->name('post.show');
 Route::post('/comment/store', [App\Http\Controllers\CommentController::class, 'store'])->name('comments.store');
 
+Route::get('/markAsRead',function(){
+    auth()->user()->unreadNotifications->markAsRead();
+});
