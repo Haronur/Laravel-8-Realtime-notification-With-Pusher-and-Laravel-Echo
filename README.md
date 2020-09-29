@@ -725,3 +725,26 @@ class MyFirstNotification extends Notification
 that's it.
 
 
+## -=-Laravel 8 Notification system Tutorial-03-=-
+
+#### Step 1: customize the `app.blade.php` 
+
+- add this below code in the `app.blade.php` file in `view/layout/app.blade.php` like below:
+```
+<li class="nav-item dropdown">
+    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+        <span class="glyphicon glyphicon-globe"></span>Notifications<span class="badge">{{ count(Auth::user()->unreadNotifications) }}</span>
+        
+    </a>
+
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+        @foreach(Auth::user()->unreadNotifications as $notification)
+        <a class="dropdown-item" onclick="event.preventDefault();
+                         document.getElementById('logout-form').submit();">
+{{$notification->data['user']['email']}} commented on <strong> {{$notification->data['CommentDetails']['body']}}</strong>
+        </a>
+        @endforeach
+    </div>
+</li>
+```
+and so on

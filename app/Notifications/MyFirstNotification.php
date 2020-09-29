@@ -41,7 +41,9 @@ class MyFirstNotification extends Notification
      */
     public function toDatabase($notifiable)
     {
+        // dd($notifiable);
         return [
+           'CommentDetails'=>$this->details,
            'user'=>auth()->user()
         ];
     }
