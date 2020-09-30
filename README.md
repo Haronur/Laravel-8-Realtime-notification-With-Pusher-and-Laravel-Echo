@@ -748,3 +748,62 @@ that's it.
 </li>
 ```
 and so on
+
+## -=-Real Time Notifications system Tutorial-01-=-
+
+#### Step 1: Install Pusher in Laravel project
+
+To send a real-time notification with laravel (pusher) we need to install pusher on our project lets install with the following artisan command
+
+`composer require pusher/pusher-php-server`
+
+#### Step 2: Create a Pusher Account
+
+Pusher provides realtime communication between servers, apps, and devices go to the Pusher Official Website and create an account it’s free. then create Channel with your app name. then click on App Keys tab you will get app credential copy this credential and past on your laravel project’s .env file after update your `.env` file look like as below
+```
+PUSHER_APP_ID=1082414
+PUSHER_APP_KEY=2be6185e2bbe0f6f12a0
+PUSHER_APP_SECRET=e657f4cd85a574e09a08
+PUSHER_APP_CLUSTER=ap2
+```
+#### Step 3: JavaScript & CSS Scaffolding
+
+`composer require laravel/ui:^2.4`
+
+- Once the laravel/ui package has been installed, you may install the frontend scaffolding using the ui Artisan command:
+
+// Generate basic scaffolding...
+```
+php artisan ui bootstrap
+php artisan ui vue
+php artisan ui react
+```
+// Generate login / registration scaffolding...
+```
+php artisan ui bootstrap --auth
+php artisan ui vue --auth
+php artisan ui react --auth
+```
+#### Step 3: Installing Laravel Echo
+
+`npm install --save laravel-echo pusher-js`
+
+Once Echo is installed, you are ready to create a fresh Echo instance in your application's JavaScript. A great place to do this is at the bottom of the **resources/js/bootstrap.js** file that is included with the Laravel framework:
+```
+import Echo from 'laravel-echo';
+
+window.Pusher = require('pusher-js');
+
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: process.env.MIX_PUSHER_APP_KEY,
+    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+    forceTLS: true
+});
+```
+
+#### Step 3: Uncomment below
+ line 
+`App\Providers\BroadcastServiceProvider::class,` in `config/app.php`
+
+#### Step 3: Uncomment below

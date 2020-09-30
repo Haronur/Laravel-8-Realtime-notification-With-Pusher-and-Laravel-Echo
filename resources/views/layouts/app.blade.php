@@ -9,9 +9,6 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -49,20 +46,8 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown" onclick="markNotificationAsRead('{{ count(Auth::user()->unreadNotifications) }}')">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    <span class="glyphicon glyphicon-globe"></span>Notifications<span class="badge">{{ count(Auth::user()->unreadNotifications) }}</span>
-                                    
-                                </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    @foreach(Auth::user()->unreadNotifications as $notification)
-                                    <a href="{{route('post.show',$notification->data['CommentDetails']['post_id'])}}" class="dropdown-item" >
-                            {{$notification->data['user']['email']}} commented on <strong> {{$notification->data['CommentDetails']['body']}}</strong>
-                                    </a>
-                                    @endforeach
-                                </div>
-                            </li>
+                            <notification :userid="{{auth()->id()}}" :unreads="{{auth()->user()->unreadNotifications}}"></notification>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -90,12 +75,9 @@
             @yield('content')
         </main>
     </div>
-    <script type="text/javascript">
-        function markNotificationAsRead(notificationCount) {
-            if(notificationCount !=='0'){
-                $.get('/markAsRead');
-            }
-        }
-    </script>
+    
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

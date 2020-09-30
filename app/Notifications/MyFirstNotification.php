@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -10,7 +11,7 @@ use Illuminate\Notifications\Notification;
 class MyFirstNotification extends Notification
 {
     use Queueable;
-    private $details;    
+    public $details;    
 
     /**
      * Create a new notification instance.
@@ -30,7 +31,7 @@ class MyFirstNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database','broadcast'];
     } 
 
     /**
@@ -48,6 +49,13 @@ class MyFirstNotification extends Notification
         ];
     }
 
+    public function toBroadcast($notifiable)
+    {
+        return new BroadcastMessage([
+           'CommentDetails'=>$this->details,
+           'user'=>auth()->user()
+        ]);
+    }
     /**
      * Get the array representation of the notification.
      *
