@@ -25,10 +25,19 @@ class CommentController extends Controller
         $input['user_id'] = auth()->user()->id;  
         $comment = Comment::create($input);
         // dd($comment->replie->user);
-        // @if(auth()->user()->id !== $request->post_id)
-        // @else
-        // @endif
-        $comment->post->user->notify(new MyFirstNotification($comment));  
+        // dd($request->post_id);
+        if(auth()->user()->id == $request->post_id){        
+            $comment->replie->user->notify(new MyFirstNotification($comment)); 
+        }
+        elseif ($request->user_id == $request->post_id) {        
+            $comment->replie->user->notify(new MyFirstNotification($comment)); 
+        }
+        else{  
+            $comment->post->user->notify(new MyFirstNotification($comment));
+            if ($comment->replie) {        
+            $comment->replie->user->notify(new MyFirstNotification($comment));
+                    }              
+        }  
         return back();
     }
 }
