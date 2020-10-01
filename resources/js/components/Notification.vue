@@ -16,7 +16,7 @@
 <script>
     import NotificationItem from './NotificationItem.vue';
     export default {
-        props: ['unreads', 'userid'],
+        props: ['unreads'],
         components: {NotificationItem},
         data(){
             return {
@@ -32,7 +32,8 @@
         },
         mounted() {
             console.log('Component mounted.');
-            Echo.private('App.User.' + this.userid)
+            var userid = $('meta[name="userid"]').attr('content');
+            Echo.private('App.Models.User.' + userid)
                 .notification((notification) => {
                     console.log(notification);
                     let newUnreadNotifications = {data: {CommentDetails: notification.CommentDetails, user: notification.user}};

@@ -15,7 +15,7 @@
             }
         },
         mounted(){
-            this.threadUrl="CommentDetails/"+ this.unread.data.CommentDetails.id
+            this.threadUrl="post-show/"+ this.unread.data.CommentDetails.post_id
         }
 
     }

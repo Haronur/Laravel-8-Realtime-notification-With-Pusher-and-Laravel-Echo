@@ -6,6 +6,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="userid" content="{{ Auth::check() ? Auth::user()->id : '' }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -47,7 +48,7 @@
                             @endif
                         @else
 
-                            <notification :userid="{{auth()->id()}}" :unreads="{{auth()->user()->unreadNotifications}}"></notification>
+                            <notification :unreads="{{auth()->user()->unreadNotifications}}"></notification>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
