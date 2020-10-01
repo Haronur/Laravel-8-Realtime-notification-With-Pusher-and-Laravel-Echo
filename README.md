@@ -761,9 +761,13 @@ To send a real-time notification with laravel (pusher) we need to install pusher
 
 Pusher provides realtime communication between servers, apps, and devices go to the Pusher Official Website and create an account it’s free. then create Channel with your app name. then click on App Keys tab you will get app credential copy this credential and past on your laravel project’s .env file after update your `.env` file look like as below
 ```
-PUSHER_APP_ID=1082414
-PUSHER_APP_KEY=2be6185e2bbe0f6f12a0
-PUSHER_APP_SECRET=e657f4cd85a574e09a08
+BROADCAST_DRIVER=pusher
+.
+.
+.
+PUSHER_APP_ID=xxxxx
+PUSHER_APP_KEY=xxxxxxxxxxxxxxx
+PUSHER_APP_SECRET=xxxxxxxxxxxxxxxx
 PUSHER_APP_CLUSTER=ap2
 ```
 #### Step 3: JavaScript & CSS Scaffolding
@@ -807,3 +811,19 @@ window.Echo = new Echo({
 `App\Providers\BroadcastServiceProvider::class,` in `config/app.php`
 
 #### Step 3: Uncomment below
+
+#### -=-Real Time Notifications system Tutorial-04-=-
+
+#### Step 2: Create a Pusher Account
+
+Pusher provides realtime communication between servers, apps, and devices go to the Pusher Official Website and create an account it’s free. then create Channel with your app name. then click on App Keys tab you will get app credential copy this credential and past on your laravel project’s .env file after update your `.env` file look like as below
+```
+BROADCAST_DRIVER=pusher
+.
+.
+.
+PUSHER_APP_ID=xxxxx
+PUSHER_APP_KEY=xxxxxxxxxxxxxxx
+PUSHER_APP_SECRET=xxxxxxxxxxxxxxxx
+PUSHER_APP_CLUSTER=ap2
+```
